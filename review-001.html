@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Review: Quantum Decoherence in Biological Systems</title>
   <style>
     body {
@@ -11,9 +11,24 @@
       margin: 2rem auto;
       padding: 1rem;
       background: #fefefe;
+      color: #222;
+    }
+    header {
+      border-bottom: 2px solid #ccc;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+    }
+    nav a {
+      margin-right: 20px;
+      color: #0056b3;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
     }
     h1, h2 {
-      color: #222;
+      margin-top: 0;
     }
     input, textarea {
       width: 100%;
@@ -22,12 +37,13 @@
       font-size: 1rem;
     }
     label {
-      display: inline-block;
       margin-right: 1rem;
+      cursor: pointer;
     }
     button {
       padding: 0.5rem 1rem;
       font-weight: bold;
+      cursor: pointer;
     }
     .review {
       border-top: 1px solid #ccc;
@@ -37,26 +53,46 @@
   </style>
 </head>
 <body>
-  <h1>Peer Review: Paper 001</h1>
-  <p><strong>Title:</strong> Quantum Decoherence in Biological Systems</p>
-  <p><a href="https://drive.google.com/file/d/1HLySzqTSs-NkER7QG7j8cU2b6zde_p3L/view?usp=sharing" target="_blank">📄 View Submitted PDF</a></p>
+  <header>
+    <h1>Outsiders of Science</h1>
+    <p><em>Peer Review Journal</em></p>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="submit.html">Submit</a>
+      <a href="peer-review.html">Peer Reviews</a>
+      <a href="published.html">Published Papers</a>
+    </nav>
+  </header>
 
-  <h2>Leave a Review</h2>
-  <form id="reviewForm">
-    <input type="text" id="name" placeholder="Your name or pseudonym" required />
-    <textarea id="comment" rows="5" placeholder="Your review comment..." required></textarea>
-    <label><input type="radio" name="vote" value="up" required> 👍 Approve</label>
-    <label><input type="radio" name="vote" value="down" required> 👎 Reject</label><br><br>
-    <button type="submit">Submit Review</button>
-  </form>
+  <main>
+    <h1>Peer Review: Paper 001</h1>
+    <p><strong>Title:</strong> Quantum Decoherence in Biological Systems</p>
+    <p><a href="https://drive.google.com/file/d/1HLySzqTSs-NkER7QG7j8cU2b6zde_p3L/view?usp=sharing" target="_blank">📄 View Submitted PDF</a></p>
 
-  <h2>Existing Reviews</h2>
-  <div id="reviews"></div>
+    <h2>Leave a Review</h2>
+    <form id="reviewForm">
+      <input type="text" id="name" placeholder="Your name or pseudonym" required />
+      <textarea id="comment" rows="5" placeholder="Your review comment..." required></textarea>
+      <label><input type="radio" name="vote" value="up" required /> 👍 Approve</label>
+      <label><input type="radio" name="vote" value="down" required /> 👎 Reject</label><br /><br />
+      <button type="submit">Submit Review</button>
+    </form>
 
-  <!-- Firebase SDK -->
+    <h2>Existing Reviews</h2>
+    <div id="reviews"></div>
+  </main>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      query,
+      where,
+      getDocs,
+    } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBADqaWgXIyFvNDn1QSuFIE-Gez0DAw048",
@@ -65,27 +101,27 @@
       storageBucket: "outsiders-journal.firebasestorage.app",
       messagingSenderId: "448715232938",
       appId: "1:448715232938:web:0cc0cc726e585849d7a2d3",
-      measurementId: "G-HQQ5MXFSTJ"
+      measurementId: "G-HQQ5MXFSTJ",
     };
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    const form = document.getElementById('reviewForm');
-    form.addEventListener('submit', async (e) => {
+    const form = document.getElementById("reviewForm");
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const name = document.getElementById('name').value.trim();
-      const comment = document.getElementById('comment').value.trim();
+      const name = document.getElementById("name").value.trim();
+      const comment = document.getElementById("comment").value.trim();
       const vote = document.querySelector('input[name="vote"]:checked').value;
 
       if (!name || !comment || !vote) return;
 
-      await addDoc(collection(db, 'peer_reviews'), {
-        paperId: '001',
+      await addDoc(collection(db, "peer_reviews"), {
+        paperId: "001",
         name,
         comment,
         vote,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
 
       form.reset();
@@ -93,15 +129,15 @@
     });
 
     async function loadReviews() {
-      const reviewsDiv = document.getElementById('reviews');
-      reviewsDiv.innerHTML = '';
-      const q = query(collection(db, 'peer_reviews'), where('paperId', '==', '001'));
+      const reviewsDiv = document.getElementById("reviews");
+      reviewsDiv.innerHTML = "";
+      const q = query(collection(db, "peer_reviews"), where("paperId", "==", "001"));
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         const r = doc.data();
-        const div = document.createElement('div');
-        div.className = 'review';
-        div.innerHTML = `<strong>${r.name}</strong> (${r.vote === 'up' ? '👍 Approved' : '👎 Rejected'})<br><p>${r.comment}</p>`;
+        const div = document.createElement("div");
+        div.className = "review";
+        div.innerHTML = `<strong>${r.name}</strong> (${r.vote === "up" ? "👍 Approved" : "👎 Rejected"})<br><p>${r.comment}</p>`;
         reviewsDiv.appendChild(div);
       });
     }
