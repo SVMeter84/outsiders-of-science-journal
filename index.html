@@ -1,34 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Outsiders of Science Journal</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Outsiders of Science: Peer Review Journal</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 2rem;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+      background-color: #fefefe;
+      color: #222;
+    }
+    header {
+      margin-bottom: 2rem;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 1rem;
+    }
+    nav {
+      margin-top: 1rem;
+    }
+    nav a {
+      margin-right: 20px;
+      color: #0056b3;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .button {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      background-color: #0056b3;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    main section {
+      margin-bottom: 2rem;
+    }
+    footer {
+      margin-top: 4rem;
+      padding-top: 1rem;
+      border-top: 1px solid #ccc;
+      color: #555;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
   <header>
-    <h1>Outsiders of Science Journal</h1>
-    <p>A journal for bold ideas in physics and beyond</p>
+    <h1>Outsiders of Science: Peer Review Journal</h1>
+    <p><em>Science without gatekeepers. Rigor without permission.</em></p>
     <nav>
-      <a href="index.html">Home</a> |
-      <a href="about.html">About</a> |
-      <a href="submissions.html">Submissions</a> |
-      <a href="archive.html">Archive</a> |
-      <a href="contact.html">Contact</a>
+      <a href="about.html">About</a>
+      <a href="submit.html">Submit</a>
+      <a href="review.html">Review Process</a>
+      <a href="published.html">Published Papers</a>
     </nav>
   </header>
 
   <main>
-    <h2>Now Live: Volume 1, Issue 1 (July 2025)</h2>
-    <p><strong>Featured Paper:</strong> <br>
-    <a href="papers/EHUP_v3_Companion.pdf">The Extended Heisenberg Uncertainty Principle</a> <br>
-    by Stephen Van Meter</p>
+    <section>
+      <h2>Welcome</h2>
+      <p><strong>Outsiders of Science</strong> is a free, open-access journal dedicated to high-quality, falsifiable ideas from independent thinkers and nontraditional researchers. Our mission is to make science accessible, fearless, and focused on evidence—not credentials.</p>
+      <a class="button" href="submit.html">Submit Your Paper</a>
+    </section>
 
-    <p>We publish quarterly. All content is free to read, free to submit, and open to the world.</p>
+    <section>
+      <h2>Latest Publications</h2>
+      <ul>
+        <li><a href="https://zenodo.org/record/15848389">EHUP v4.0: Temporal Resolution as a Quantum Conjugate</a></li>
+        <!-- Additional papers will appear here -->
+      </ul>
+    </section>
   </main>
 
   <footer>
-    <p>&copy; 2025 Outsiders of Science Journal. All rights reserved.</p>
+    <p>&copy; 2025 Outsiders of Science Journal. Editor-in-Chief: Stephen Van Meter.</p>
   </footer>
 </body>
 </html>
