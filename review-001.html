@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Review: Quantum Decoherence in Biological Systems</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: #fefefe;
+    }
+    h1, h2 {
+      color: #222;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    label {
+      display: inline-block;
+      margin-right: 1rem;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+    }
+    .review {
+      border-top: 1px solid #ccc;
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Peer Review: Paper 001</h1>
+  <p><strong>Title:</strong> Quantum Decoherence in Biological Systems</p>
+  <p><a href="https://drive.google.com/file/d/1HLySzqTSs-NkER7QG7j8cU2b6zde_p3L/view?usp=sharing" target="_blank">📄 View Submitted PDF</a></p>
+
+  <h2>Leave a Review</h2>
+  <form id="reviewForm">
+    <input type="text" id="name" placeholder="Your name or pseudonym" required />
+    <textarea id="comment" rows="5" placeholder="Your review comment..." required></textarea>
+    <label><input type="radio" name="vote" value="up" required> 👍 Approve</label>
+    <label><input type="radio" name="vote" value="down" required> 👎 Reject</label><br><br>
+    <button type="submit">Submit Review</button>
+  </form>
+
+  <h2>Existing Reviews</h2>
+  <div id="reviews"></div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBADqaWgXIyFvNDn1QSuFIE-Gez0DAw048",
+      authDomain: "outsiders-journal.firebaseapp.com",
+      projectId: "outsiders-journal",
+      storageBucket: "outsiders-journal.firebasestorage.app",
+      messagingSenderId: "448715232938",
+      appId: "1:448715232938:web:0cc0cc726e585849d7a2d3",
+      measurementId: "G-HQQ5MXFSTJ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const form = document.getElementById('reviewForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const comment = document.getElementById('comment').value.trim();
+      const vote = document.querySelector('input[name="vote"]:checked').value;
+
+      if (!name || !comment || !vote) return;
+
+      await addDoc(collection(db, 'peer_reviews'), {
+        paperId: '001',
+        name,
+        comment,
+        vote,
+        timestamp: Date.now()
+      });
+
+      form.reset();
+      loadReviews();
+    });
+
+    async function loadReviews() {
+      const reviewsDiv = document.getElementById('reviews');
+      reviewsDiv.innerHTML = '';
+      const q = query(collection(db, 'peer_reviews'), where('paperId', '==', '001'));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        const r = doc.data();
+        const div = document.createElement('div');
+        div.className = 'review';
+        div.innerHTML = `<strong>${r.name}</strong> (${r.vote === 'up' ? '👍 Approved' : '👎 Rejected'})<br><p>${r.comment}</p>`;
+        reviewsDiv.appendChild(div);
+      });
+    }
+
+    loadReviews();
+  </script>
+</body>
+</html>
